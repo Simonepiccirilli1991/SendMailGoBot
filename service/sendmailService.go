@@ -7,7 +7,7 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func sendMail(dto model.MailDto) {
+func SendMail(dto model.MailDto) {
 	// Create a new message
 	m := gomail.NewMessage()
 

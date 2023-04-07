@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func GetMailPending(m *model.MailDto) (*model.MailDto, error) {
+func GetMailPending() (*model.MailDto, error) {
 	url := "http//:localhost:8082/mail/pending"
 
 	resp, err := http.Get(url)

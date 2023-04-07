@@ -1,8 +1,9 @@
-package sendmailgobot
+package main
 
 import (
 	"SendMailGoBot/service"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -17,9 +18,27 @@ func newRouter() *mux.Router {
 
 	return r
 }
+func main() {
+
+	r := newRouter()
+	http.ListenAndServe(":8080", r)
+
+	if r != nil {
+		log.Fatal("Se rotto")
+	}
+
+}
 
 func handler(w http.ResponseWriter, r *http.Request) {
 
-	checkPeding = service.GetMailPending()
-	fmt.Fprintf(w, "Hello World!")
+	mailDto, err := service.GetMailPending()
+	if err != nil {
+		log.Printf("no mail pending")
+		fmt.Fprintf(w, "failed to get mail")
+	}
+
+	service.SendMail(*mailDto)
+
+	log.Printf("Mail sended: %+v", mailDto)
+	fmt.Fprintf(w, "mail sended succefully!")
 }
